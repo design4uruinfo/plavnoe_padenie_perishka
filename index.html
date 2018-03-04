@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Плавное падение перышка</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+   #perishko {
+    position: absolute;
+    right: 125px;
+    top: 0px;
+    }
+            
+        </style>
+        
+    </head>
+    <body>
+       
+        <img id="perishko" src="images/perishko.png" alt=""/>
+        
+        <script>
+            
+                 var countNN1=0;
+      var LFT1=1;
+      var DEGA2 = 0;
+      var DegaT2 = 1;
+    
+    
+      perishko.onclick = function() {
+      animate({
+        duration: 8000,
+        timing: function bounce(timeFraction) {
+          for (var a = 0, b = 1, result; 1; a += b, b /= 2) {
+            if (timeFraction >= (7 - 4 * a) / 11) {
+              return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+            }
+          }
+        },
+        draw: function(progress) {
+
+          perishko.style.top = 50+progress * 260 + 'px';
+          perishko.style.right = 50+progress * 300 + 'px';
+           
+           
+           if (DEGA2 >= 75){
+               DegaT2 = 0;
+           }
+           
+           if (DEGA2 <= 5) {
+               DegaT2 = 1;
+           }
+           
+           if (DegaT2 == 1) {
+               
+               DEGA2++;
+               
+           } else {
+               
+               DEGA2--;
+               
+           }
+           
+          perishko.style.transform = "rotate("+DEGA2+"deg)";
+          
+        }
+      });
+    };
+    
+    function animate({timing, draw, duration}) {
+
+  let start = performance.now();
+
+  requestAnimationFrame(function animate(time) {
+    // timeFraction goes from 0 to 1
+    let timeFraction = (time - start) / duration;
+    if (timeFraction > 1) timeFraction = 1;
+
+    // calculate the current animation state
+    let progress = timing(timeFraction);
+
+    draw(progress); // draw it
+
+    if (timeFraction < 1) {
+      requestAnimationFrame(animate);
+    }
+
+  });
+}
+            
+        </script>    
+        
+        
+    </body>
+</html>
